@@ -175,4 +175,22 @@ public class Cliente {
             DbConnection.closeConnection(conn);
         }
     }
+
+    public static int countClientes(){
+        Connection conn = DbConnection.getConnection();
+        String sql = "SELECT COUNT(c.id) FROM clientes c";
+        try{
+            PreparedStatement stm = conn.prepareStatement(sql);
+            ResultSet resultSet = stm.executeQuery();
+            if(!resultSet.next()){
+                return 0;
+            }
+
+            return  resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            DbConnection.closeConnection(conn);
+        }
+    }
 }
